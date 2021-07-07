@@ -1,0 +1,45 @@
+.d_flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    
+    .sort_button{
+        border: 1px solid #f3f3f3;
+        border-radius: 10px;
+        padding: 5px 15px;
+        margin-right: 5px;
+        cursor: pointer;
+        font-size: 14px;
+
+        &:hover {
+            background-color: #e7f6ff;
+        }
+    }
+
+    .sort_button_active {
+        border: 1px solid #f3f3f3;
+        border-radius: 10px;
+        padding: 5px 15px;
+        margin-right: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        background-color: #e7f6ff;  
+    }
+
+   
+
+    .sort_button_m{
+        border: 1px solid #f3f3f3;
+        border-radius: 10px;
+        padding: 5px 15px;
+        margin-right: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        background-color: #e7f6ff;
+
+        &:hover {
+            background-color: #f3f3f3;
+        }
+    }
+}
