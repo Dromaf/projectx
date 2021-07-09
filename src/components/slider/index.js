@@ -4,21 +4,19 @@ import 'swiper/swiper.scss';
 
 function Slider(props) {
 
-    console.log(props)
-
     return (
         <div className={styles.d_flex}>
             
                 <Swiper
                     spaceBetween={60}
                     slidesPerView={4}
-                    onSlideChange={() => console.log('slide change')}
-                    onSwiper={(swiper) => console.log(swiper)}
+                //     onSlideChange={() => console.log('slide change')}
+                //     onSwiper={(swiper) => console.log(swiper)}
             >
-                 {props.itemsAM.data && props.itemsAM.data.map((item, index) => (
-                    <SwiperSlide>
+                 {props.itemsAM.data && props.itemsAM.data.map((item) => (
+                    <SwiperSlide key={item.id}>
                     
-                                    <div className={styles.slider_card} key={index}>
+                                    <div className={styles.slider_card} >
                                             <img width="100%" height={255} src={item.attributes.posterImage.large } alt="film" />
                                             <h4>{item.attributes.canonicalTitle}</h4>
                                             <div>

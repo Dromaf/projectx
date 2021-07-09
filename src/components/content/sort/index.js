@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './sort.module.scss'
+// import { Link } from 'react-router-dom';
 
 const sortButton = [
     { type: 'popular', name: 'Популярные' },
@@ -17,18 +18,18 @@ const typeButton = [
 ]
 
 function Sort(props) {
-
-    console.log(props)
     return (
         <div>
             <div className={styles.d_flex}>
                 {sortButton && sortButton.map((item, index) => (
-                    <button
-                        key={index}
-                        onClick={props.onClickSort}
-                        value={item.type}
-                        className={ props.valueitem === item.type ? styles.sort_button_active  : styles.sort_button}>{item.name}
-                    </button>
+                    // <Link to={`/${item.type}`}>
+                        <button
+                            key={index}
+                            onClick={props.onClickSort}
+                            value={item.type}
+                            className={ props.valueitem === item.type ? styles.sort_button_active  : styles.sort_button}>{item.name}
+                        </button>
+                    // </Link>
                 ))}
             </div>
 
