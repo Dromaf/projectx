@@ -9,15 +9,17 @@ function Card(props) {
     return (                      
         <div className={styles.d_flex}>
                     {items && items.map((item) => (
-                        <Link to={`/films/${item.id}/${item.title}`} key={item.id}>
+                        <Link to={`/films/${item.id}/${item.original_title}`} key={item.id}
+                            // onClick={props.onClickFilmCard}
+                        >
                             <div className={styles.slider_card} >
-                                    <img width="100%" height={255} src={ props.img_url + item.poster_path} alt={item.title} />
+                                    <img width="100%" height={255} src={ props.img_url + item.poster_path} alt={item.title} id={item.id}/>
                                     <h4>{item.title}</h4>
                                     <div>
                                             <span className={styles.raiting}>{item.vote_average}</span>
                                             <span className={styles.raiting_vot}>👍{item.vote_count}</span>
                                     </div>
-                                    </div>
+                            </div>
                         </Link>        
                     ))}
                                    

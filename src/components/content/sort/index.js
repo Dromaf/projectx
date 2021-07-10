@@ -18,6 +18,7 @@ const typeButton = [
 ]
 
 function Sort(props) {
+    console.log(props.requests)
     return (
         <div>
             <div className={styles.d_flex}>

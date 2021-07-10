@@ -14,13 +14,18 @@ function Content(props) {
 	return (
 		
         <div>
-                <Sliders itemsAM={itemsAM}/>
+                <Sliders items={items} img_url={img_url}/>
 
                 <div className={styles.content_flex}>
 
                         <div className={styles.l_flex}>
 							<Sort onClickSort={onClickSort} valueitem={valueitem} />
-							<Card items={items} itemsAM={itemsAM} img_url={img_url} />
+							<Card
+								items={items}
+								itemsAM={itemsAM}
+								img_url={img_url}
+								// onClickFilmCard={props.onClickFilmCard}
+							/>
 							<Pagination
 								activePage={activePage}
 								totalPages={totalPage}
