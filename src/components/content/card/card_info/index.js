@@ -3,6 +3,7 @@ import styles from './card_info.module.scss';
 
 function CardInfo(props) {
     const items = props.items.results;
+    const item = props.itemsCard;
     const idFilms = Number(props.match.params.id);
     console.log(props)
     return (

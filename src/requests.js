@@ -1,7 +1,7 @@
 const API_KEY = 'ecfaaed89cfbc68f027db531f7486239';
 
 const requests = [
-    {fetch : `/movie/popular?api_key=${API_KEY}`, type : 'popular'},
+    {fetch: `/movie/popular?api_key=${API_KEY}`, type: 'popular' },
     {fetch : `/movie/top_rated?api_key=${API_KEY}`, type : 'top_rated'},
     {fetch : `/movie/upcoming?api_key=${API_KEY}`, type : 'upcoming'},
     {fetch : `/discover/movie?api_key=${API_KEY}&with_genres=28`, type : 'action'},

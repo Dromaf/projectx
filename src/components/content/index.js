@@ -8,9 +8,8 @@ import Card from './card';
 import Sliders from '../slider';
 
 function Content(props) {
-	const { items, itemsAM, img_url, valueitem, onClickSort, activePage, onChangePage, curBtNColrSort } = props;
+	const { items, itemsAM, img_url, valueitem, onClickSort, activePage, onChangePage, curBtNColrSort} = props;
 	let totalPage = Number(items.total_pages)
-
 	return (
 		
         <div>
@@ -24,7 +23,7 @@ function Content(props) {
 								items={items}
 								itemsAM={itemsAM}
 								img_url={img_url}
-								// onClickFilmCard={props.onClickFilmCard}
+								onClickFilmCard={props.onClickFilmCard}
 							/>
 							<Pagination
 								activePage={activePage}

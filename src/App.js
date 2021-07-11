@@ -9,7 +9,7 @@ import requests from './requests';
 import { Route, Switch } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-// const api_key = 'api_key=ecfaaed89cfbc68f027db531f7486239';
+const api_key = '?api_key=23a88dbca49ffd6e59ebc13cc2ab60b7';
 const img_url = 'https://image.tmdb.org/t/p/w500/';
 const baseUrl = 'https://api.themoviedb.org/3';
 let method = requests[0].fetch;
@@ -20,8 +20,10 @@ let language = 'ru';
 function App() {
 
       const [items, setItems] = useState([]);
+      const [itemsCard, setItemsCard] = useState([]);
       // const [itemsAM, setItemsAM] = useState([]);
       const [valueitem, setValueitem] = useState(method);
+      const [valueitemCard, setValueitemCard] = useState();
       const [curBtNColrSort, setCurBtNColrSort] = useState(curColrSort);
       const [activePage, setActivePage] = useState(numberPage);
 
@@ -33,6 +35,15 @@ function App() {
             }
             FetchData();
         }, [valueitem, activePage]);
+  
+        useEffect(() => {  
+          async function FetchDataCard() {
+            const request = await axios.get(`${baseUrl}${valueitemCard}&language=${language}`);
+              setItemsCard(request.data);   
+            return request;
+            }
+            FetchDataCard();
+        }, [valueitemCard]);
 
         // useEffect(() => {
         //     axios.get(`https://kitsu.io/api/edge/anime?page[limit]=10&page[offset]=${activePage}`).then((res) => {
@@ -40,24 +51,20 @@ function App() {
         //       });
         // }, [activePage]);
 
-  const onClickSort = e => {
-        console.log(e.target.value);
+      const onClickSort = e => {
         let fetchType = requests.find(a => a.type === e.target.value)
         setValueitem(fetchType.fetch);
         setCurBtNColrSort(fetchType.type);
         setActivePage(numberPage);
 
       }
-    // const onClickFilmCard = (e) => {
-    //       setValueitem(e.target.id);
-    //       console.log(valueitem)
-    //     }
+      const onClickFilmCard = (e) => {
+          setValueitemCard(`/movie/${e.target.id}${api_key}`);
+        }
         
       const onChangePage = (e, pageInfo) => {
         setActivePage(pageInfo.activePage);
       };
-
-
   return (
     <div className="wrapper">
 
@@ -73,7 +80,7 @@ function App() {
                 valueitem={valueitem}
                 curBtNColrSort ={curBtNColrSort}  
                 onChangePage={onChangePage}
-                // onClickFilmCard={onClickFilmCard}
+                onClickFilmCard={onClickFilmCard}
                 onClickSort={onClickSort}/>}
             />
 
@@ -82,7 +89,7 @@ function App() {
                 items={items}
                 // itemsAM={itemsAM}
                 img_url={img_url} {...props} />} />
-            <Route path='/films/:id/:title' render={(props) => <CardInfo items={items} img_url={img_url} {...props} /> } />
+            <Route exact path='/films/:id/:title' render={(props) => <CardInfo itemsCard={itemsCard} items={items} img_url={img_url} {...props} /> } />
             
           </Switch>
       </BrowserRouter>

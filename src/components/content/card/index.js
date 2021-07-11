@@ -5,14 +5,12 @@ import { Link } from 'react-router-dom';
 function Card(props) {
     const items = props.items.results;
 //     const itemsAM = props.itemsAM.data;
-
+    console.log(props.onClickFilmCard)
     return (                      
         <div className={styles.d_flex}>
                     {items && items.map((item) => (
-                        <Link to={`/films/${item.id}/${item.original_title}`} key={item.id}
-                            // onClick={props.onClickFilmCard}
-                        >
-                            <div className={styles.slider_card} >
+                        <Link to={`/films/${item.id}/${item.original_title}`} key={item.id}  >
+                            <div className={styles.slider_card} onClick={props.onClickFilmCard} >
                                     <img width="100%" height={255} src={ props.img_url + item.poster_path} alt={item.title} id={item.id}/>
                                     <h4>{item.title}</h4>
                                     <div>
@@ -20,7 +18,7 @@ function Card(props) {
                                             <span className={styles.raiting_vot}>👍{item.vote_count}</span>
                                     </div>
                             </div>
-                        </Link>        
+                       </Link>        
                     ))}
                                    
                     {/* {itemsAM && itemsAM.map((item, index) => (
