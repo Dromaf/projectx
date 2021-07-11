@@ -9,16 +9,28 @@ const sortButton = [
 ]
 
 const typeButton = [
-    { type: 'all', name: 'Все' },
-    { type: 'films', name: 'Фильмы' },
-    { type: 'tvs', name: 'Сериалы' },
-    { type: 'cartoons', name: 'Мультфильмы' },
-    { type: 'anime', name: 'Аниме' },
-    { type: 'manga', name: 'Манга'}
+    { type: 'action', name: 'Боевик' },
+    { type: 'adventure', name: 'Приключения' },
+    { type: 'animation', name: 'Мультфильм' },
+    { type: 'comedy', name: 'Комедия' },
+    { type: 'crime', name: 'Криминал' },
+    { type: 'documentary', name: 'Документальный' },
+    { type: 'drama', name: 'Драма' },
+    { type: 'family', name: 'Семейный' },
+    { type: 'fantasy', name: 'Фентези' },
+    { type: 'history', name: 'Исторический' },
+    { type: 'horror', name: 'Ужасы' },
+    { type: 'music', name: 'Музыкальные' },
+    { type: 'mystery', name: 'Мистический' },
+    { type: 'romance', name: 'Мелодрама' },
+    { type: 'sciencefiction', name: 'Фантастика' },
+    { type: 'tvmovie', name: 'Сериалы' },
+    { type: 'thriller', name: 'Триллер' },
+    { type: 'war', name: 'Военный' },
+    { type: 'western', name: 'Вестерн'}
 ]
 
 function Sort(props) {
-    console.log(props.requests)
     return (
         <div>
             <div className={styles.d_flex}>
@@ -28,7 +40,7 @@ function Sort(props) {
                             key={index}
                             onClick={props.onClickSort}
                             value={item.type}
-                            className={ props.valueitem === item.type ? styles.sort_button_active  : styles.sort_button}>{item.name}
+                            className={ props.curBtNColrSort === item.type ? styles.sort_button_active  : styles.sort_button}>{item.name}
                         </button>
                     // </Link>
                 ))}
@@ -38,8 +50,9 @@ function Sort(props) {
                 {typeButton && typeButton.map((item, index) => (
                     <button
                         key={index}
+                        onClick={props.onClickSort}
                         value={item.type}
-                        className={styles.sort_button_m}>{item.name}
+                        className={ props.curBtNColrSort === item.type ? styles.sort_button_active  : styles.sort_button}>{item.name}
                     </button>
                 ))}
             </div>

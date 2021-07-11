@@ -5,28 +5,29 @@ import Card from './components/content/card';
 import CardInfo from './components/content/card/card_info';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import requests from './requests';
+import requests from './requests';
 import { Route, Switch } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-const api_key = 'api_key=ecfaaed89cfbc68f027db531f7486239';
+// const api_key = 'api_key=ecfaaed89cfbc68f027db531f7486239';
 const img_url = 'https://image.tmdb.org/t/p/w500/';
-const baseUrl = 'https://api.themoviedb.org/3/movie/';
-let method = 'popular';
+const baseUrl = 'https://api.themoviedb.org/3';
+let method = requests[0].fetch;
+let curColrSort = requests[0].type;
 let numberPage = 1;
 let language = 'ru';
-
 
 function App() {
 
       const [items, setItems] = useState([]);
       // const [itemsAM, setItemsAM] = useState([]);
       const [valueitem, setValueitem] = useState(method);
+      const [curBtNColrSort, setCurBtNColrSort] = useState(curColrSort);
       const [activePage, setActivePage] = useState(numberPage);
 
         useEffect(() => {  
           async function FetchData() {
-            const request = await axios.get(`${baseUrl}${valueitem}?${api_key}&page=${activePage}&language=${language}`);
+            const request = await axios.get(`${baseUrl}${valueitem}&page=${activePage}&language=${language}`);
               setItems(request.data);   
             return request;
             }
@@ -39,8 +40,11 @@ function App() {
         //       });
         // }, [activePage]);
 
-      const onClickSort = e => {
-        setValueitem(e.target.value);
+  const onClickSort = e => {
+        console.log(e.target.value);
+        let fetchType = requests.find(a => a.type === e.target.value)
+        setValueitem(fetchType.fetch);
+        setCurBtNColrSort(fetchType.type);
         setActivePage(numberPage);
 
       }
@@ -66,7 +70,8 @@ function App() {
                 items={items}
                 // itemsAM={itemsAM}
                 img_url={img_url}
-                valueitem={valueitem}  
+                valueitem={valueitem}
+                curBtNColrSort ={curBtNColrSort}  
                 onChangePage={onChangePage}
                 // onClickFilmCard={onClickFilmCard}
                 onClickSort={onClickSort}/>}

@@ -8,7 +8,7 @@ import Card from './card';
 import Sliders from '../slider';
 
 function Content(props) {
-	const { items, itemsAM, img_url, valueitem, onClickSort, activePage, onChangePage } = props;
+	const { items, itemsAM, img_url, valueitem, onClickSort, activePage, onChangePage, curBtNColrSort } = props;
 	let totalPage = Number(items.total_pages)
 
 	return (
@@ -19,7 +19,7 @@ function Content(props) {
                 <div className={styles.content_flex}>
 
                         <div className={styles.l_flex}>
-							<Sort onClickSort={onClickSort} valueitem={valueitem} />
+							<Sort onClickSort={onClickSort} valueitem={valueitem} curBtNColrSort={curBtNColrSort}/>
 							<Card
 								items={items}
 								itemsAM={itemsAM}
