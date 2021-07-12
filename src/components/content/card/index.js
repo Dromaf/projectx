@@ -9,7 +9,7 @@ function Card(props) {
     return (                      
         <div className={styles.d_flex}>
                     {items && items.map((item) => (
-                        <Link to={`/films/${item.id}/${item.original_title}`} key={item.id}  >
+                        <Link to={`/film/${item.id}`} key={item.id}  >
                             <div className={styles.slider_card} onClick={props.onClickFilmCard} >
                                     <img width="100%" height={255} src={ props.img_url + item.poster_path} alt={item.title} id={item.id}/>
                                     <h4>{item.title}</h4>
