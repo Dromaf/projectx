@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 function Card(props) {
     const items = props.items.results;
 //     const itemsAM = props.itemsAM.data;
-    console.log(props.onClickFilmCard)
     return (                      
         <div className={styles.d_flex}>
                     {items && items.map((item) => (

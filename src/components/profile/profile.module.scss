@@ -1,0 +1,23 @@
+.d_flex{
+    margin-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-bottom: 1px solid #eaeaea;
+    position: relative;
+
+    .tablist{
+        display: flex;
+        border: 2px solid #eaeaea;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        padding: 5px;
+        line-height: 0;
+        color: #000;
+        align-items: center;
+    }
+
+    img {
+        margin-right: 10px;
+    }
+}
