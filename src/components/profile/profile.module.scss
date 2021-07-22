@@ -12,12 +12,26 @@
         margin-bottom: 10px;
         border-radius: 10px;
         padding: 5px;
-        line-height: 0;
         color: #000;
         align-items: center;
+
+        .tabitemdescr{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-weight: 600;
+            align-items: center;
+
+        .tabitemname{
+            width: 60%;
+            }
+        }
     }
+
+
 
     img {
         margin-right: 10px;
+        display: block;
     }
 }

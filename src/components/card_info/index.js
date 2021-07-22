@@ -2,12 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { Button, Icon } from 'semantic-ui-react'
 import styles from './card_info.module.scss';
 
 const CardInfo = () => {
-    const [filmData, setFilmData] = useState();
+  const [filmData, setFilmData] = useState();
+  const [addFavorite, setAddFavorite] = useState([]);
+  const [addСheckItem, setAddСheckItem] = useState([]);
+  const [addWatchItem, setAddWatchItem] = useState([]);
+  const [addUnWatchItem, setAddUnWatchItem] = useState([]);
+  const [handleFavor, setHandleFavor] = useState(false);
+  const [handleCheckItem, setHandleCheckItem] = useState(false);
+  const [handleUnWatchItem, setHandleUnWatchItem] = useState(false);
+  const [handleWatchItem, setHandleWatchItem] = useState(false);
 	const { id } = useParams();
-    console.log(filmData);
 
 	useEffect(() => {  
 		async function FetchDataCard() {
@@ -18,7 +26,27 @@ const CardInfo = () => {
 			return request;
         }
         FetchDataCard();
-	}, [id]);
+  }, [id]);
+
+  const watchItem = (obj) => {
+    setAddWatchItem(prev => [...prev, obj]);
+    setHandleWatchItem(!handleWatchItem);
+  }
+
+  const unWatchItem = (obj) => {
+    setAddUnWatchItem(prev => [...prev, obj]);
+    setHandleUnWatchItem(!handleUnWatchItem);
+  }
+
+  const checkItem = (obj) => {
+    setAddСheckItem(prev => [...prev, obj]);
+    setHandleCheckItem(!handleCheckItem);
+  }
+
+  const favoriteItem = (obj) => {
+    setAddFavorite(prev => [...prev, obj]);
+    setHandleFavor(!handleFavor);
+  }
 
 	return (
 		<div className={styles.d_flex}>
@@ -29,8 +57,17 @@ const CardInfo = () => {
 				
 				<div className={styles.d_flex_info}>
 					<div className={styles.d_flex_imgbox}>
-						<img height={255} width={170} src={filmData.poster_path ? 'https://image.tmdb.org/t/p/w500' + filmData.poster_path : '../../img/notfound.JPG'} alt={filmData.title} />
-					</div>
+              <img height={255} width={170} src={filmData.poster_path ? 'https://image.tmdb.org/t/p/w500' + filmData.poster_path : '../../img/notfound.JPG'} alt={filmData.title} />
+            <div className={styles.buttongroup}>
+            <Button.Group floated='left'>
+              <Button icon onClick={(obj) => favoriteItem(filmData)} data-tooltip="Любимое" toggle active={handleFavor}><Icon name='heart' /></Button>  
+              <Button icon onClick={(obj) => checkItem(filmData)} data-tooltip="Посмотрено" toggle active={handleCheckItem}><Icon name='checkmark' /></Button>
+              <Button icon onClick={(obj) => watchItem(filmData)} data-tooltip="Буду смотреть" toggle active={handleWatchItem}><Icon name='eye' /></Button>
+              <Button icon onClick={(obj) => unWatchItem(filmData)} data-tooltip="Брошено" toggle active={handleUnWatchItem} ><Icon name='low vision' /></Button>
+             </Button.Group>
+            </div>
+          </div>
+
 					<div>
 							<div><b>Рейтинги:</b> ⭐ {filmData.vote_average}</div>
 							<div><b>Дата выхода:</b> {filmData.release_date}</div>
@@ -43,7 +80,7 @@ const CardInfo = () => {
 											<span key={index}> <Link to={`/`} >{item.name} </Link></span>
                 ))}
               </div>
-							<div><b>Время:</b> {filmData.runtime} мин.</div>
+              <div><b>Время:</b> {filmData.runtime} мин.</div>
               <div><b>Бюджет:</b> {filmData.budget} $</div>
               <div><b>Сборы:</b> {filmData.revenue} $</div>
               <div>{filmData.homepage ? <span><b>Страница фильма:</b> {filmData.homepage}</span> : ''}</div>
@@ -54,25 +91,6 @@ const CardInfo = () => {
 					<h2>Описание: «{filmData.title}»:</h2>
 					{filmData.overview}
 				</div>	
-				<div className={styles.d_flex}>
-								{/* <div>release_date- {filmData.release_date}</div>
-								<div>vote_count - {filmData.vote_count}</div>
-								<div>popularity - {filmData.popularity}</div>
-								<div>budget - {filmData.budget}</div>
-								<div>{filmData.production_companies && filmData.production_companies.map((item) => (
-											<div > <img height={50} width={150} src={ 'https://image.tmdb.org/t/p/w500' + item.logo_path} alt={item.name} />{item.name}</div>
-											))}
-								</div>
-								<div>{filmData.production_countries && filmData.production_countries.map((item) => (
-											<div > {item.name}</div>
-											))}
-								</div>
-								<div>Сборы - {filmData.revenue}</div>
-								<div>runtime - {filmData.runtime}</div>
-								<div>status - {filmData.status}</div>
-								<div>tagline - {filmData.tagline}</div>
-								<div>homepage - {filmData.homepage}</div> */}
-				</div>
 			</div>
 			)}
 		</div>
