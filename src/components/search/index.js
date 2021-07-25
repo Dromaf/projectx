@@ -10,7 +10,6 @@ function Search() {
     const [searchPanel, setSearchPanel] = useState(false);
     const rootEl = useRef(null);
     const isIdle = useIdle(1200);
-    console.log(searchListFilms);
     
     useEffect(() => {
       const onClick = e => rootEl.current.contains(e.target) || setSearchPanel(false);

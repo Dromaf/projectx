@@ -4,7 +4,6 @@ import 'swiper/swiper.scss';
 import { Link } from 'react-router-dom';
 
 function Slider(props) {
-    console.log(props)
     return (
         <div className={styles.d_flex}>
             

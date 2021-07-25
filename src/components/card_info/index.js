@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { watchItem, unWatchItem, checkItem, favoriteItem} from '../../store/cardinfoSlice';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react'
@@ -7,15 +10,36 @@ import styles from './card_info.module.scss';
 
 const CardInfo = () => {
   const [filmData, setFilmData] = useState();
-  const [addFavorite, setAddFavorite] = useState([]);
-  const [addСheckItem, setAddСheckItem] = useState([]);
-  const [addWatchItem, setAddWatchItem] = useState([]);
-  const [addUnWatchItem, setAddUnWatchItem] = useState([]);
-  const [handleFavor, setHandleFavor] = useState(false);
-  const [handleCheckItem, setHandleCheckItem] = useState(false);
-  const [handleUnWatchItem, setHandleUnWatchItem] = useState(false);
-  const [handleWatchItem, setHandleWatchItem] = useState(false);
-	const { id } = useParams();
+  const { id } = useParams();
+  let activeWatchItems = false;
+
+  const dispatch = useDispatch();
+  const handleWatchItems = useSelector(state => state.cardinfo.watchItemList);
+  const handleUnWatchItem = useSelector(state => state.cardinfo.handleUnWatchItem);
+  const handleCheckItem = useSelector(state => state.cardinfo.handleCheckItem);
+  const handleFavor = useSelector(state => state.cardinfo.handleFavor);
+
+  const singleActiveItem = handleWatchItems.filter(el => el.id === Number(id));
+  console.log(singleActiveItem)
+  if (singleActiveItem.length > 0) {
+    activeWatchItems = singleActiveItem[0].handleWatchItem
+    console.log(singleActiveItem[0].handleWatchItem)
+  } else {
+    activeWatchItems = false
+  }
+
+  const watchItems = () => {
+    dispatch(watchItem({ filmData }));
+  }
+  const unWatchItems = () => {
+    dispatch(unWatchItem({ filmData }));
+  }
+  const checkItems = () => {
+    dispatch(checkItem({ filmData }));
+  }
+  const favoriteItems = () => {
+    dispatch(favoriteItem({ filmData }));
+  }
 
 	useEffect(() => {  
 		async function FetchDataCard() {
@@ -27,27 +51,6 @@ const CardInfo = () => {
         }
         FetchDataCard();
   }, [id]);
-
-  const watchItem = (obj) => {
-    setAddWatchItem(prev => [...prev, obj]);
-    setHandleWatchItem(!handleWatchItem);
-  }
-
-  const unWatchItem = (obj) => {
-    setAddUnWatchItem(prev => [...prev, obj]);
-    setHandleUnWatchItem(!handleUnWatchItem);
-  }
-
-  const checkItem = (obj) => {
-    setAddСheckItem(prev => [...prev, obj]);
-    setHandleCheckItem(!handleCheckItem);
-  }
-
-  const favoriteItem = (obj) => {
-    setAddFavorite(prev => [...prev, obj]);
-    setHandleFavor(!handleFavor);
-  }
-
 	return (
 		<div className={styles.d_flex}>
 			{filmData && (
@@ -60,10 +63,10 @@ const CardInfo = () => {
               <img height={255} width={170} src={filmData.poster_path ? 'https://image.tmdb.org/t/p/w500' + filmData.poster_path : '../../img/notfound.JPG'} alt={filmData.title} />
             <div className={styles.buttongroup}>
             <Button.Group floated='left'>
-              <Button icon onClick={(obj) => favoriteItem(filmData)} data-tooltip="Любимое" toggle active={handleFavor}><Icon name='heart' /></Button>  
-              <Button icon onClick={(obj) => checkItem(filmData)} data-tooltip="Посмотрено" toggle active={handleCheckItem}><Icon name='checkmark' /></Button>
-              <Button icon onClick={(obj) => watchItem(filmData)} data-tooltip="Буду смотреть" toggle active={handleWatchItem}><Icon name='eye' /></Button>
-              <Button icon onClick={(obj) => unWatchItem(filmData)} data-tooltip="Брошено" toggle active={handleUnWatchItem} ><Icon name='low vision' /></Button>
+              <Button icon onClick={favoriteItems} data-tooltip="Любимое" toggle active={handleFavor}><Icon name='heart' /></Button>  
+              <Button icon onClick={checkItems} data-tooltip="Посмотрено" toggle active={handleCheckItem}><Icon name='checkmark' /></Button>
+              <Button icon onClick={watchItems} data-tooltip="Буду смотреть" toggle active={activeWatchItems}><Icon name='eye' /></Button>
+              <Button icon onClick={unWatchItems} data-tooltip="Брошено" toggle active={handleUnWatchItem} ><Icon name='low vision' /></Button>
              </Button.Group>
             </div>
           </div>
