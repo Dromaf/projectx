@@ -12,21 +12,20 @@ const CardInfo = () => {
   const [filmData, setFilmData] = useState();
   const { id } = useParams();
   let activeWatchItems = false;
+  let activeFavorItems = false;
 
   const dispatch = useDispatch();
-  const handleWatchItems = useSelector(state => state.cardinfo.watchItemList);
+  const handleWatchItem = useSelector(state => state.cardinfo.watchItemList);
   const handleUnWatchItem = useSelector(state => state.cardinfo.handleUnWatchItem);
   const handleCheckItem = useSelector(state => state.cardinfo.handleCheckItem);
-  const handleFavor = useSelector(state => state.cardinfo.handleFavor);
+  const handleFavor = useSelector(state => state.cardinfo.favoriteItemList);
 
-  const singleActiveItem = handleWatchItems.filter(el => el.id === Number(id));
-  console.log(singleActiveItem)
-  if (singleActiveItem.length > 0) {
-    activeWatchItems = singleActiveItem[0].handleWatchItem
-    console.log(singleActiveItem[0].handleWatchItem)
-  } else {
-    activeWatchItems = false
-  }
+  const singleActiveItem = handleWatchItem.filter(el => el.id === Number(id));
+  singleActiveItem.length > 0 ? activeWatchItems = singleActiveItem[0].handleWatchItem : activeWatchItems = false
+
+  const singleFavorItem = handleFavor.filter(el => el.id === Number(id));
+  singleFavorItem.length > 0 ? activeFavorItems = singleFavorItem[0].handleFavor : activeFavorItems = false
+
 
   const watchItems = () => {
     dispatch(watchItem({ filmData }));
@@ -63,7 +62,7 @@ const CardInfo = () => {
               <img height={255} width={170} src={filmData.poster_path ? 'https://image.tmdb.org/t/p/w500' + filmData.poster_path : '../../img/notfound.JPG'} alt={filmData.title} />
             <div className={styles.buttongroup}>
             <Button.Group floated='left'>
-              <Button icon onClick={favoriteItems} data-tooltip="Любимое" toggle active={handleFavor}><Icon name='heart' /></Button>  
+              <Button icon onClick={favoriteItems} data-tooltip="Любимое" toggle active={activeFavorItems}><Icon name='heart' /></Button>  
               <Button icon onClick={checkItems} data-tooltip="Посмотрено" toggle active={handleCheckItem}><Icon name='checkmark' /></Button>
               <Button icon onClick={watchItems} data-tooltip="Буду смотреть" toggle active={activeWatchItems}><Icon name='eye' /></Button>
               <Button icon onClick={unWatchItems} data-tooltip="Брошено" toggle active={handleUnWatchItem} ><Icon name='low vision' /></Button>

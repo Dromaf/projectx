@@ -14,8 +14,7 @@ const cardinfoSlice = createSlice({
     },
     reducers: {
         watchItem(state, action) {
-            state.handleWatchItem = !state.handleWatchItem;
-            action.payload.filmData = { ...action.payload.filmData, ...{ 'handleWatchItem': state.handleWatchItem } }
+            action.payload.filmData = { ...action.payload.filmData, ...{ 'handleWatchItem': !state.handleWatchItem } }
             
 
             console.log(state.handleWatchItem)
@@ -36,6 +35,9 @@ const cardinfoSlice = createSlice({
             state.handleCheckItem = !state.handleCheckItem;
         },
         favoriteItem(state, action) {
+            action.payload.filmData = { ...action.payload.filmData, ...{ 'handleFavor': !state.handleFavort } }
+
+
             !state.favoriteItemList.some(el => el.id === action.payload.filmData.id) ?
             state.favoriteItemList = ([...state.favoriteItemList, action.payload.filmData]) :
             state.favoriteItemList = state.favoriteItemList.filter(el => el.id !== action.payload.filmData.id);
