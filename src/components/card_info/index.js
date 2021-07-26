@@ -11,20 +11,29 @@ import styles from './card_info.module.scss';
 const CardInfo = () => {
   const [filmData, setFilmData] = useState();
   const { id } = useParams();
-  let activeWatchItems = false;
-  let activeFavorItems = false;
+  let activeWatchToggle = false;
+  let activeFavorToggle = false;
+  let activeUnWatchToggle = false;
+  let activeCheckToggle = false;
 
   const dispatch = useDispatch();
-  const handleWatchItem = useSelector(state => state.cardinfo.watchItemList);
-  const handleUnWatchItem = useSelector(state => state.cardinfo.handleUnWatchItem);
-  const handleCheckItem = useSelector(state => state.cardinfo.handleCheckItem);
-  const handleFavor = useSelector(state => state.cardinfo.favoriteItemList);
+  
+  const watchItemList = useSelector(state => state.cardinfo.watchItemList);
+  const unWatchItemList = useSelector(state => state.cardinfo.unWatchItemList);
+  const checkItemList = useSelector(state => state.cardinfo.checkItemList);
+  const favoriteItemList = useSelector(state => state.cardinfo.favoriteItemList);
 
-  const singleActiveItem = handleWatchItem.filter(el => el.id === Number(id));
-  singleActiveItem.length > 0 ? activeWatchItems = singleActiveItem[0].handleWatchItem : activeWatchItems = false
+  const singleActiveItem = watchItemList.filter(el => el.id === Number(id));
+  if(singleActiveItem.length > 0) activeWatchToggle = singleActiveItem[0].handleWatchItem
 
-  const singleFavorItem = handleFavor.filter(el => el.id === Number(id));
-  singleFavorItem.length > 0 ? activeFavorItems = singleFavorItem[0].handleFavor : activeFavorItems = false
+  const singleFavorItem = favoriteItemList.filter(el => el.id === Number(id));
+  if (singleFavorItem.length > 0) activeFavorToggle = singleFavorItem[0].handleFavor
+  
+  const singleUnWatchItem = unWatchItemList.filter(el => el.id === Number(id));
+  if (singleUnWatchItem.length > 0) activeUnWatchToggle = singleUnWatchItem[0].handleUnWatchItem
+  
+  const singleCheckItem = checkItemList.filter(el => el.id === Number(id));
+  if(singleCheckItem.length > 0 ) activeCheckToggle = singleCheckItem[0].handleCheckItem
 
 
   const watchItems = () => {
@@ -62,10 +71,10 @@ const CardInfo = () => {
               <img height={255} width={170} src={filmData.poster_path ? 'https://image.tmdb.org/t/p/w500' + filmData.poster_path : '../../img/notfound.JPG'} alt={filmData.title} />
             <div className={styles.buttongroup}>
             <Button.Group floated='left'>
-              <Button icon onClick={favoriteItems} data-tooltip="Любимое" toggle active={activeFavorItems}><Icon name='heart' /></Button>  
-              <Button icon onClick={checkItems} data-tooltip="Посмотрено" toggle active={handleCheckItem}><Icon name='checkmark' /></Button>
-              <Button icon onClick={watchItems} data-tooltip="Буду смотреть" toggle active={activeWatchItems}><Icon name='eye' /></Button>
-              <Button icon onClick={unWatchItems} data-tooltip="Брошено" toggle active={handleUnWatchItem} ><Icon name='low vision' /></Button>
+              <Button icon onClick={favoriteItems} data-tooltip="Любимое" toggle active={activeFavorToggle}><Icon name='heart' /></Button>  
+              <Button icon onClick={checkItems} data-tooltip="Посмотрено" toggle active={activeCheckToggle}><Icon name='checkmark' /></Button>
+              <Button icon onClick={watchItems} data-tooltip="Буду смотреть" toggle active={activeWatchToggle}><Icon name='eye' /></Button>
+              <Button icon onClick={unWatchItems} data-tooltip="Брошено" toggle active={activeUnWatchToggle} ><Icon name='low vision' /></Button>
              </Button.Group>
             </div>
           </div>

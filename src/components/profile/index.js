@@ -1,6 +1,8 @@
 import React from 'react'
 import { Tab, Button, Icon } from 'semantic-ui-react'
 import styles from './profile.module.scss';
+import { useDispatch } from 'react-redux';
+import { watchItem, unWatchItem, checkItem, favoriteItem, deleteItem} from '../../store/cardinfoSlice';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -10,27 +12,29 @@ function Profile() {
     const unWatchItemList = useSelector(state => state.cardinfo.unWatchItemList);
     const checkItemList = useSelector(state => state.cardinfo.checkItemList);
     const favoriteItemList = useSelector(state => state.cardinfo.favoriteItemList);
-  
-    console.log(watchItemList);
 
-    const checkItem = () => {
-      console.log('checkItem');
+  
+    let activeFavorToggle = false;
+    const singleFavorItem = favoriteItemList.filter(el => el.id === Number(favoriteItemList[0].id));
+    if (singleFavorItem.length > 0) activeFavorToggle = singleFavorItem[0].handleFavor
+  
+    const dispatch = useDispatch();
+  
+    const watchItems = (filmData) => {
+      dispatch(watchItem({ filmData }));
+    }
+    const unWatchItems = (filmData) => {
+      dispatch(unWatchItem({ filmData }));
+    }
+    const checkItems = (filmData) => {
+      dispatch(checkItem({filmData}));
+    }
+    const favoriteItems = (filmData) => {
+      dispatch(favoriteItem({ filmData }));
     }
   
-    const watchItem = () => {
-      console.log('watchItem');
-    }
-  
-    const unWatchItem = () => {
-      console.log('watchItem');
-    }
-  
-    const deleteItem = (id) => {
-      console.log(id);
-    }
-  
-    const favoriteItem = () => {
-      console.log('favoriteItem');
+    const deleteItems = (filmData) => {
+      dispatch(deleteItem({ filmData }));
     }
 
     const panes = [
@@ -47,9 +51,9 @@ function Profile() {
                     <div className={styles.tabitemname}><Link to={`/film/${item.id}`}>{item.title} </Link></div>
                     <div>{item.vote_average} ⭐</div>
                     <div>
-                      <Button icon onClick = {checkItem} data-tooltip="Посмотрено"><Icon name='checkmark' /></Button>
-                      <Button icon onClick = {unWatchItem} data-tooltip="Брошено"><Icon name='low vision' /></Button>
-                      <Button icon onClick = {() => deleteItem(item.id)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
+                      <Button icon onClick = {() => checkItems(item)} data-tooltip="Посмотрено"><Icon name='checkmark' /></Button>
+                      <Button icon onClick = {() => unWatchItems(item)} data-tooltip="Брошено"><Icon name='low vision' /></Button>
+                      <Button icon onClick = {() => deleteItems(item)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
                     </div>
                   </div>
               </div>
@@ -69,8 +73,8 @@ function Profile() {
                     <div className={styles.tabitemname}><Link to={`/film/${item.id}`}>{item.title} </Link></div>
                     <div>{item.vote_average} ⭐</div>
                     <div>
-                      <Button icon onClick = {favoriteItem} data-tooltip="Любимое"><Icon name='heart' /></Button>
-                      <Button icon onClick = {() => deleteItem(item.id)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
+                      <Button icon onClick = {() => favoriteItems(item)} toggle active={activeFavorToggle} data-tooltip="Любимое"><Icon name='heart' /></Button>
+                      <Button icon onClick = {() => deleteItems(item)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
                     </div>
                   </div>
               </div>
@@ -90,8 +94,8 @@ function Profile() {
                     <div className={styles.tabitemname}><Link to={`/film/${item.id}`}>{item.title} </Link></div>
                     <div>{item.vote_average} ⭐</div>
                     <div>
-                      <Button icon onClick = {watchItem} data-tooltip="Буду смотреть"><Icon name='eye' /></Button>
-                      <Button icon onClick = {() => deleteItem(item.id)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
+                      <Button icon onClick = {() => watchItems(item)} data-tooltip="Буду смотреть"><Icon name='eye' /></Button>
+                      <Button icon onClick = {() => deleteItems(item)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
                     </div>
                   </div>
               </div>
@@ -111,7 +115,7 @@ function Profile() {
                     <div className={styles.tabitemname}><Link to={`/film/${item.id}`}>{item.title} </Link></div>
                     <div>{item.vote_average} ⭐</div>
                     <div>
-                      <Button icon onClick = {() => deleteItem(item.id)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
+                      <Button icon onClick = {() => deleteItems(item)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
                     </div>
                   </div>
               </div>
