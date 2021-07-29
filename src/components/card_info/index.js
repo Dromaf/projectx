@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { watchItem, unWatchItem, checkItem, favoriteItem} from '../../store/cardinfoSlice';
+import { watchItem, unWatchItem, checkItem, favoriteItem, fetchCardInfo} from '../../store/cardinfoSlice';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react'
 import styles from './card_info.module.scss';
 
 const CardInfo = () => {
-  const [filmData, setFilmData] = useState();
+  // const [filmData, setFilmData] = useState();
   const { id } = useParams();
   let activeWatchToggle = false;
   let activeFavorToggle = false;
@@ -18,10 +18,7 @@ const CardInfo = () => {
 
   const dispatch = useDispatch();
   
-  const watchItemList = useSelector(state => state.cardinfo.watchItemList);
-  const unWatchItemList = useSelector(state => state.cardinfo.unWatchItemList);
-  const checkItemList = useSelector(state => state.cardinfo.checkItemList);
-  const favoriteItemList = useSelector(state => state.cardinfo.favoriteItemList);
+  const { watchItemList, unWatchItemList, checkItemList, favoriteItemList, filmData, status, error } = useSelector(state => state.cardinfo);
 
   const singleActiveItem = watchItemList.filter(el => el.id === Number(id));
   if(singleActiveItem.length > 0) activeWatchToggle = singleActiveItem[0].handleWatchItem
@@ -49,18 +46,29 @@ const CardInfo = () => {
     dispatch(favoriteItem({ filmData }));
   }
 
+	// useEffect(() => {  
+	// 	async function FetchDataCard() {
+	// 		const request = await axios.get(
+	// 			`https://api.themoviedb.org/3/movie/${id}?api_key=23a88dbca49ffd6e59ebc13cc2ab60b7&language=ru`
+	// 		);
+	// 		setFilmData(request.data);   
+	// 		return request;
+  //       }
+  //     FetchDataCard();
+  // }, [id]);
+
 	useEffect(() => {  
-		async function FetchDataCard() {
-			const request = await axios.get(
-				`https://api.themoviedb.org/3/movie/${id}?api_key=23a88dbca49ffd6e59ebc13cc2ab60b7&language=ru`
-			);
-			setFilmData(request.data);   
-			return request;
-        }
-        FetchDataCard();
-  }, [id]);
+    dispatch(fetchCardInfo(id));
+  }, [dispatch, id]);
+
+
 	return (
-		<div className={styles.d_flex}>
+    <div className={styles.d_flex}>
+      
+      {status === 'Loading' && <h2>Loading...</h2>}
+      {error && <h2>Error...{error}</h2>}
+
+
 			{filmData && (
 			<div className={styles.d_flex}>
 				

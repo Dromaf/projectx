@@ -8,10 +8,11 @@ import { Link } from 'react-router-dom';
 
 function Profile() {
 
-    const watchItemList = useSelector(state => state.cardinfo.watchItemList);
-    const unWatchItemList = useSelector(state => state.cardinfo.unWatchItemList);
-    const checkItemList = useSelector(state => state.cardinfo.checkItemList);
-    const favoriteItemList = useSelector(state => state.cardinfo.favoriteItemList);
+//   const watchItemList = useSelector(state => state.cardinfo.watchItemList);
+//   const unWatchItemList = useSelector(state => state.cardinfo.unWatchItemList);
+//   const checkItemList = useSelector(state => state.cardinfo.checkItemList);
+// const favoriteItemList = useSelector(state => state.cardinfo.favoriteItemList);
+  const { watchItemList, unWatchItemList, checkItemList, favoriteItemList} = useSelector(state => state.cardinfo);
 
   
     let activeFavorToggle = false;

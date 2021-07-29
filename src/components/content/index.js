@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Pagination } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import styles from './content.module.scss'
 import Sort from './sort';
@@ -34,7 +33,6 @@ function Content() {
 	  }
 		
 	  const onChangePage = (e, pageInfo) => {
-		console.log(pageInfo.activePage)
 		setActivePage(pageInfo.activePage);
 	  };
 
@@ -71,12 +69,6 @@ function Content() {
         );
         }
 
-		Content.propTypes = {
-			totalPage: PropTypes.number
-		};
-		Content.defaultProps = {
-			totalPage: 500
-		};
 		
 export default Content;
   
