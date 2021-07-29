@@ -28,24 +28,7 @@ const searchSlice = createSlice({
         error: null,
         searchData:[]
     },
-    reducers: {
-        watchItem(state, action) {
-           
-        },
-        unWatchItem(state, action) {
-           
-        },
-        checkItem(state, action) {
-          
-        },
-        favoriteItem(state, action) {
-          
-        },
 
-        deleteItem(state, action){
-               
-        }
-    },
     extraReducers: {
         [fetchSearch.pending]: (state, action) => {
             state.status = 'Loading';
@@ -62,7 +45,5 @@ const searchSlice = createSlice({
 
     }
 });
-
-export const { watchItem, unWatchItem, checkItem, favoriteItem, handleWatchItem, deleteItem } = searchSlice.actions;
 
 export default searchSlice.reducer;
