@@ -12,7 +12,6 @@ export const fetchCardInfo = createAsyncThunk(
             if (request.status < 200 && request.status > 200) {
                 throw new Error('Server Error');
             }
-            console.log(request)
             const data = await request.data;   
             return data; 
         } catch (error) {
@@ -75,12 +74,13 @@ const cardinfoSlice = createSlice({
         },
 
         deleteItem(state, action){
-            state.checkItemList = state.checkItemList.filter(el => el.id !== action.payload.filmData.id);
-            state.watchItemList = state.watchItemList.filter(el => el.id !== action.payload.filmData.id);
-            state.unWatchItemList = state.unWatchItemList.filter(el => el.id !== action.payload.filmData.id);
-
-            if (action.payload.filmData.handleFavor) state.favoriteItemList = state.favoriteItemList.filter(el => el.id !== action.payload.filmData.id);
-           
+            if (action.payload.filmData.handleFavor) {
+                state.favoriteItemList = state.favoriteItemList.filter(el => el.id !== action.payload.filmData.id);
+            } else {
+                state.checkItemList = state.checkItemList.filter(el => el.id !== action.payload.filmData.id);
+                state.watchItemList = state.watchItemList.filter(el => el.id !== action.payload.filmData.id);
+                state.unWatchItemList = state.unWatchItemList.filter(el => el.id !== action.payload.filmData.id);
+            }
         }
     },
     extraReducers: {

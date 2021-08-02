@@ -7,13 +7,17 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function Profile() {
+  
+    const { watchItemList, unWatchItemList, checkItemList, favoriteItemList} = useSelector(state => state.cardinfo);
 
-//   const watchItemList = useSelector(state => state.cardinfo.watchItemList);
-//   const unWatchItemList = useSelector(state => state.cardinfo.unWatchItemList);
-//   const checkItemList = useSelector(state => state.cardinfo.checkItemList);
-// const favoriteItemList = useSelector(state => state.cardinfo.favoriteItemList);
-  const { watchItemList, unWatchItemList, checkItemList, favoriteItemList} = useSelector(state => state.cardinfo);
-
+    // const singleFavorItem = favoriteItemList.filter(el => el.id !== Number(favoriteItemList.id));
+    // console.log(singleFavorItem)
+    // let activeFavorToggle = null;
+    // if (singleFavorItem.length > 0) {
+    //   singleFavorItem.map((item, index) => (
+    //     console.log( item.handleFavor, item.id)
+    //   ))
+    // }
   
     let activeFavorToggle = false;
     const singleFavorItem = favoriteItemList.filter(el => el.id === Number(favoriteItemList[0].id));
