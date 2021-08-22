@@ -9,19 +9,6 @@ import { Link } from 'react-router-dom';
 function Profile() {
   
     const { watchItemList, unWatchItemList, checkItemList, favoriteItemList} = useSelector(state => state.cardinfo);
-
-    // const singleFavorItem = favoriteItemList.filter(el => el.id !== Number(favoriteItemList.id));
-    // console.log(singleFavorItem)
-    // let activeFavorToggle = null;
-    // if (singleFavorItem.length > 0) {
-    //   singleFavorItem.map((item, index) => (
-    //     console.log( item.handleFavor, item.id)
-    //   ))
-    // }
-  
-    let activeFavorToggle = false;
-    const singleFavorItem = favoriteItemList.filter(el => el.id === Number(favoriteItemList[0].id));
-    if (singleFavorItem.length > 0) activeFavorToggle = singleFavorItem[0].handleFavor
   
     const dispatch = useDispatch();
   
@@ -73,12 +60,12 @@ function Profile() {
               <div className={styles.tablist} key={index}  >
                   <div>
                   <img height={60} width={40}  src={item.poster_path ? 'https://image.tmdb.org/t/p/w500' +  item.poster_path : '../../img/notfound.JPG'} alt='Название' />
-                  </div>
+                </div>
                   <div className={styles.tabitemdescr}>
                     <div className={styles.tabitemname}><Link to={`/film/${item.id}`}>{item.title} </Link></div>
                     <div>{item.vote_average} ⭐</div>
                     <div>
-                      <Button icon onClick = {() => favoriteItems(item)} toggle active={activeFavorToggle} data-tooltip="Любимое"><Icon name='heart' /></Button>
+                      <Button icon onClick = {() => favoriteItems(item)} toggle active={favoriteItemList.some((obj)=> Number(obj.id) === Number(item.id))} data-tooltip="Любимое"><Icon name='heart' /></Button>
                       <Button icon onClick = {() => deleteItems(item)} data-tooltip="Удалить из списка"><Icon name='delete' /></Button>
                     </div>
                   </div>
@@ -114,7 +101,7 @@ function Profile() {
             {favoriteItemList && favoriteItemList.map((item, index) => (
               <div className={styles.tablist}  key={index} >
                   <div>
-                  <img height={60} width={40}  src={item.poster_path ? 'https://image.tmdb.org/t/p/w500' +  item.poster_path : '../../img/notfound.JPG'} alt='Название' />
+                  <img height={60} width={40} src={item.poster_path ? 'https://image.tmdb.org/t/p/w500' + item.poster_path : '../../img/notfound.JPG'} alt='Название' />
                   </div>
                   <div className={styles.tabitemdescr}>
                     <div className={styles.tabitemname}><Link to={`/film/${item.id}`}>{item.title} </Link></div>

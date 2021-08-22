@@ -41,6 +41,7 @@ const cardinfoSlice = createSlice({
         watchItem(state, action) {
             action.payload.filmData = { ...action.payload.filmData, ...{ 'handleWatchItem': !state.handleWatchItem } }
             
+
             !state.watchItemList.some(el => el.id === action.payload.filmData.id) ?
             state.watchItemList = ([...state.watchItemList, action.payload.filmData]) :
             state.watchItemList = state.watchItemList.filter(el => el.id !== action.payload.filmData.id);
@@ -58,19 +59,28 @@ const cardinfoSlice = createSlice({
         },
         checkItem(state, action) {
             action.payload.filmData = { ...action.payload.filmData, ...{ 'handleCheckItem': !state.handleCheckItem } }
+            // action.payload.filmData = { ...action.payload.filmData, ...{ 'handleFavor': !action.payload.activeCheckToggle } }
             
+            // console.log(action.payload.activeCheckToggle)
+            // console.log(state.checkItemList)
+            // console.log( action.payload.filmData)
+
+
             !state.checkItemList.some(el => el.id === action.payload.filmData.id) ?
             state.checkItemList = ([...state.checkItemList, action.payload.filmData]) :
             state.checkItemList = state.checkItemList.filter(el => el.id !== action.payload.filmData.id);
             state.watchItemList = state.watchItemList.filter(el => el.id !== action.payload.filmData.id);
             state.unWatchItemList = state.unWatchItemList.filter(el => el.id !== action.payload.filmData.id);
+
+            
         },
         favoriteItem(state, action) {
             action.payload.filmData = { ...action.payload.filmData, ...{ 'handleFavor': !state.handleFavort } }
-            
+
             !state.favoriteItemList.some(el => el.id === action.payload.filmData.id) ?
             state.favoriteItemList = ([...state.favoriteItemList, action.payload.filmData]) :
             state.favoriteItemList = state.favoriteItemList.filter(el => el.id !== action.payload.filmData.id);
+
         },
 
         deleteItem(state, action){

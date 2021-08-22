@@ -32,7 +32,7 @@ const CardInfo = () => {
   const singleCheckItem = checkItemList.filter(el => el.id === Number(id));
   if(singleCheckItem.length > 0 ) activeCheckToggle = singleCheckItem[0].handleCheckItem
 
-
+  
   const watchItems = () => {
     dispatch(watchItem({ filmData }));
   }
@@ -40,7 +40,8 @@ const CardInfo = () => {
     dispatch(unWatchItem({ filmData }));
   }
   const checkItems = () => {
-    dispatch(checkItem({ filmData }));
+    console.log()
+    dispatch(checkItem({ filmData,activeCheckToggle }));
   }
   const favoriteItems = () => {
     dispatch(favoriteItem({ filmData }));
